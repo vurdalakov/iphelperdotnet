@@ -7,4 +7,8 @@ Project is licensed under the MIT license.
 
 Project also includes a UI application that demonstrates usage of IpHelperDotNet library:
 
-(https://raw.githubusercontent.com/vurdalakov/iphelperdotnet/master/doc/img/screenshot1.png)
+![IpHelper UI application](https://raw.githubusercontent.com/vurdalakov/iphelperdotnet/master/doc/img/screenshot1.png)
+
+A better alternative:
+
+* [TCPView from Windows Sysinternals](https://technet.microsoft.com/en-us/sysinternals/tcpview.aspx)
