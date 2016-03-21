@@ -5,4 +5,6 @@ IpHelperDotNet
 
 Project is licensed under the MIT license.
 
-Project also includes a UI application that demonstrates usage of IpHelperDotNet library.
+Project also includes a UI application that demonstrates usage of IpHelperDotNet library:
+
+(https://raw.githubusercontent.com/vurdalakov/iphelperdotnet/master/doc/img/screenshot1.png)
