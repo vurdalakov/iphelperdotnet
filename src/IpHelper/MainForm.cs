@@ -30,6 +30,8 @@
                 ProcessHelper.IsAdministrator() ? "Administrator" : "Normal User", hostName, String.Join(", ", ips.ToArray()));
 
             this.RefreshList();
+
+            this.Activate();
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
