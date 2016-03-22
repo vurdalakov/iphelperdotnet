@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
-
-namespace Vurdalakov.IpHelperDotNet
+﻿namespace Vurdalakov.IpHelperDotNet
 {
+    using System;
+    using System.Diagnostics;
+    using System.Windows.Forms;
+
     static class Program
     {
         /// <summary>
@@ -14,7 +14,7 @@ namespace Vurdalakov.IpHelperDotNet
         {
             try
             {
-                if (ProcessHelper.RestartApplicationAsAdministrator())
+                if (!Debugger.IsAttached && ProcessHelper.RestartApplicationAsAdministrator())
                 {
                     return;
                 }

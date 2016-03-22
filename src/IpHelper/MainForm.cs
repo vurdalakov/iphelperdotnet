@@ -1,7 +1,9 @@
 ﻿namespace Vurdalakov.IpHelperDotNet
 {
     using System;
-    using System.Diagnostics;
+    using System.Collections.Generic;
+    using System.Net;
+    using System.Net.Sockets;
     using System.Windows.Forms;
 
     public partial class MainForm : Form
@@ -13,7 +15,19 @@
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            this.toolStripStatusLabelAdmin.Text = ProcessHelper.IsAdministrator() ? "Administrator" : "Normal User";
+            var hostName = Dns.GetHostName();
+            var host = Dns.GetHostEntry(hostName);
+
+            var ips = new List<String>();
+            foreach (var ip in host.AddressList)
+            {
+                if (ip.AddressFamily == AddressFamily.InterNetwork)
+                {
+                    ips.Add(ip.ToString());
+                }
+            }
+            this.toolStripStatusLabelAdmin.Text = String.Format("Running as {0} on {1} ({2})",
+                ProcessHelper.IsAdministrator() ? "Administrator" : "Normal User", hostName, String.Join(", ", ips.ToArray()));
 
             this.RefreshList();
         }
@@ -42,6 +56,9 @@
             this.listView.VirtualListSize = this._tcpTable.Count;
 
             this.listView.Invalidate();
+
+            this.toolStripStatusLabelStats.Text = String.Format("Endpoints: {0}, Established: {1}, Listening: {2}, Time Wait: {3}, Close Wait: {4}",
+                this._tcpTable.Count, this._tcpTable.EstablishedCount, this._tcpTable.ListeningCount, this._tcpTable.TimeWaitCount, this._tcpTable.CloseWaitCount);
         }
 
         private void listView_RetrieveVirtualItem(object sender, RetrieveVirtualItemEventArgs e)

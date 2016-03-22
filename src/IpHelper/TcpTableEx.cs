@@ -2,19 +2,46 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Net.NetworkInformation;
 
     public class TcpTableEx : List<TcpRowEx>
     {
         private TcpRowExComparer _tcpRowExComparer = new TcpRowExComparer(1, true);
 
+        public Int32 EstablishedCount { get; private set; }
+        public Int32 ListeningCount { get; private set; }
+        public Int32 TimeWaitCount { get; private set; }
+        public Int32 CloseWaitCount { get; private set; }
+
         public void Refresh()
         {
             this.Clear();
+
+            EstablishedCount = 0;
+            ListeningCount = 0;
+            TimeWaitCount = 0;
+            CloseWaitCount = 0;
 
             var tcpRows = IpHelper.GetRows(true);
             foreach (var tcpRow in tcpRows)
             {
                 this.Add(new TcpRowEx(tcpRow));
+
+                switch (tcpRow.State)
+                {
+                    case TcpState.Established:
+                        EstablishedCount++;
+                        break;
+                    case TcpState.Listen:
+                        ListeningCount++;
+                        break;
+                    case TcpState.TimeWait:
+                        TimeWaitCount++;
+                        break;
+                    case TcpState.CloseWait:
+                        CloseWaitCount++;
+                        break;
+                }
             }
 
             this.Sort(_tcpRowExComparer);
